@@ -1,6 +1,6 @@
 # TOKEN = '7688209431:AAFZ3GE4QNVG-jgcxNg4p-a8CVktpbzsXf8' # Test
 TOKEN = '8016927490:AAG-IsK2KD9CC4nomhgLtxVRLd036bbl5pU' # Ikkachi
-URL = 'https://sticker-bot.vercel.app//getpost/' 
+URL = 'https://stickerbot-three.vercel.app/getpost/' 
 TELEGRAM_API_URL = f'https://api.telegram.org/bot{TOKEN}/'
 
 APPWRITE_API_KEY = 'standard_209cfffc4a59c78cbee9a763b70630da671dbc4ab840473bd7f0978e5b604d4f15b60e27a4395c01a98f655cea1ce20804092aaeb4c9b85af5e2ee8c44e432354267d4d437e6fb305c9d55d687fa1566ba29c900a21585cf1ac4ba7bad07484e120ec741e1a32ad66ea1ce27ab207d72c8380b965556194a187e00b766c889e6'

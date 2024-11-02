@@ -21,20 +21,6 @@ client = None
 stickers_id_list = []
 
 def setwebhook(request):
-    global client
-    global stickers_id_list
-    client = Client()
-    client.set_endpoint('https://cloud.appwrite.io/v1')
-    client.set_project(APPWRITE_PROJECT_ID)
-    client.set_key(APPWRITE_API_KEY)
-    
-    storage = Storage(client)
-    response =  storage.list_files(bucket_id=APPWRITE_BUCKET_ID)
-    stickers_id_list.clear()
-    for item in response['files']:
-        stickers_id_list.append(item['$id'])
-    
-    
     response = requests.post(f"{TELEGRAM_API_URL}setWebhook?url={URL}").json()
     return HttpResponse(f"{response}")
 
@@ -46,6 +32,20 @@ def telegram_bot(request):
         return HttpResponse('ok')
     else:
         return HttpResponseBadRequest('Bad Request')
+    
+def initAppwrite():
+    global client
+    global stickers_id_list
+    client = Client()
+    client.set_endpoint('https://cloud.appwrite.io/v1')
+    client.set_project(APPWRITE_PROJECT_ID)
+    client.set_key(APPWRITE_API_KEY)
+    storage = Storage(client)
+    response =  storage.list_files(bucket_id=APPWRITE_BUCKET_ID)
+    stickers_id_list.clear()
+    for item in response['files']:
+        stickers_id_list.append(item['$id'])
+    
 
 def handle_update(update):
     if 'message' in update:
@@ -74,6 +74,10 @@ def send_sticker_raw(chat_id, reply_to_message_id, member_name):
         current_time = datetime.now()
     else:
         return
+    print('stickers count => ',len(stickers_id_list))
+    
+    if(len(stickers_id_list)==0):
+        initAppwrite()
     
     sticker_data = Storage(client).get_file_download(bucket_id=APPWRITE_BUCKET_ID, file_id=random.choice(stickers_id_list))
 
